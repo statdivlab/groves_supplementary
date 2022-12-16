@@ -40,7 +40,7 @@ plot_res <- plot_logmap(vectors = lm_res$vectors, phylogenomic = length(paths),
 plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
-ggsave("figures/strep/lm_viz.png")
+ggsave("figures/strep/lm_viz.jpeg")
 
 # compute proportion of variance explained by each component 
 pca_res <- stats::prcomp(lm_res$vectors)
@@ -55,7 +55,7 @@ plot_res <- plot_logmap(vectors = lm_res$vectors, phylogenomic = length(paths), 
 plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
-ggsave("figures/strep/lm_viz_rib.png")
+ggsave("figures/strep/lm_viz_rib.jpeg")
 
 # add the phylogenomic tree from the ribosomal set 
 paths <- c(paths, "data/strep/phylogenomic_trees/concat_tree_rib.txt")
@@ -73,7 +73,7 @@ plot_res <- plot_logmap(vectors = new_vectors, phylogenomic = nrow(new_vectors) 
 plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
-ggsave("figures/strep/lm_viz_full.png")
+ggsave("figures/strep/lm_viz_full.jpeg")
 # add names for outlying trees in PC1 and PC2 
 plot_res <- plot_logmap(vectors = new_vectors, phylogenomic = nrow(new_vectors) - 1, 
             other_tree = nrow(new_vectors), 
@@ -86,7 +86,7 @@ plot_res <- plot_logmap(vectors = new_vectors, phylogenomic = nrow(new_vectors) 
 plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
-ggsave("figures/strep/lm_viz_full_labeled.png")
+ggsave("figures/strep/lm_viz_full_labeled.jpeg")
 
 # compare the two phylogenomic trees
 # compare BHV distances between all trees 
@@ -126,7 +126,7 @@ plot_res <- plot_logmap(vectors = new_vectors, phylogenomic = nrow(new_vectors) 
 plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
-ggsave("figures/strep/lm_viz_sum_branches.png")
+ggsave("figures/strep/lm_viz_sum_branches.jpeg")
 # principal component 1 seems to be governed by branch lengths
 
 # re-scale gene trees to divide each branch by the sum of branch lengths
@@ -156,7 +156,7 @@ plot_res <- plot_logmap(vectors = rescaled_lm_res$vectors, phylogenomic = length
 plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
-ggsave("figures/strep/standardized_lm_plot.png")
+ggsave("figures/strep/standardized_lm_plot.jpeg")
 
 # check for trees that are not binary
 binary_trees <- check_binary(all_trees)
