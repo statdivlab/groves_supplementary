@@ -30,11 +30,11 @@ gene_names <- stringr::str_sub(list.files("data/strep/gene_trees/"), 1, -5)
 paths <- c(paste0("data/strep/gene_trees/", list.files("data/strep/gene_trees")),
            "data/strep/phylogenomic_trees/concat_tree.txt")
 # compute log map coordinates for all trees 
-lm_res <- compute_logmap(tree_paths = paths,
+lm_res_strep <- compute_logmap(tree_paths = paths,
                          tree_names = c(gene_names, "phylogenomic"))
 # we can see that the base tree was chosen to be the phylogenomic tree
-print(lm_res$base_lab)
-plot_res <- plot_logmap(vectors = lm_res$vectors, phylogenomic = length(paths),
+print(lm_res_strep$base_lab)
+plot_res <- plot_logmap(vectors = lm_res_strep$vectors, phylogenomic = length(paths),
             title = "Streptococcus Trees", tree_names = c(gene_names, "phylogenomic"),
             phylogenomic_name = "$\\bar{T}_p^{full}$")
 plot_res$plot + 
@@ -43,13 +43,13 @@ plot_res$plot +
 ggsave("figures/strep/lm_viz.jpeg")
 
 # compute proportion of variance explained by each component 
-pca_res <- stats::prcomp(lm_res$vectors)
+pca_res <- stats::prcomp(lm_res_strep$vectors)
 pca_res$sdev^2/sum(pca_res$sdev^2)
 
 # let's plot the ribosomal trees in the plot
 ribs <- grep("Ribosom", gene_names)
 ribs <- ifelse(1:length(paths) %in% ribs, "ribosomal", "other")
-plot_res <- plot_logmap(vectors = lm_res$vectors, phylogenomic = length(paths), group = ribs, alpha = 0.8,
+plot_res <- plot_logmap(vectors = lm_res_strep$vectors, phylogenomic = length(paths), group = ribs, alpha = 0.8,
             title = "Streptococcus Trees", tree_names = c(gene_names, "phylogenomic"),
             phylogenomic_name = "$\\bar{T}_p^{full}$")
 plot_res$plot + 
@@ -61,13 +61,13 @@ ggsave("figures/strep/lm_viz_rib.jpeg")
 paths <- c(paths, "data/strep/phylogenomic_trees/concat_tree_rib.txt")
 new_vectors <- add_vector(new_tree_path = paths[length(paths)],
                           base_path = "data/strep/gene_trees/Cpn60_TCP1.txt",
-                          vectors = lm_res$vectors,
+                          vectors = lm_res_strep$vectors,
                           new_name = "ribosomal phylogenomic")
 plot_res <- plot_logmap(vectors = new_vectors, phylogenomic = nrow(new_vectors) - 1, 
             other_tree = nrow(new_vectors), 
             phylogenomic_name = "$\\bar{T}_p^{full}$", 
             other_name = "$\\bar{T}_p^{rib}$", ignore_in_pca = nrow(new_vectors),
-            title = "Streptococcus Trees", group = c(ribs, "other"),
+            title = "PCA of Euclidean representation of Streptococcus trees", group = c(ribs, "other"),
             tree_names = c(gene_names, "phylogenomic", "ribosomal phylogenomic"),
             alpha = 0.8)
 plot_res$plot + 
@@ -79,7 +79,7 @@ plot_res <- plot_logmap(vectors = new_vectors, phylogenomic = nrow(new_vectors) 
             other_tree = nrow(new_vectors), 
             phylogenomic_name = "$\\bar{T}_p^{full}$", 
             other_name = "$\\bar{T}_p^{rib}$", ignore_in_pca = nrow(new_vectors),
-            title = "Streptococcus Trees", group = c(ribs, "other"),
+            title = "PCA of Euclidean representation of Streptococcus trees", group = c(ribs, "other"),
             tree_names = c(gene_names, "phylogenomic", "ribosomal phylogenomic"),
             alpha = 0.8,
             trees_to_label = c("DUF3270", "DUF1934", "EcsB"))
@@ -133,23 +133,23 @@ ggsave("figures/strep/lm_viz_sum_branches.jpeg")
 rescaled_trees <- standardize_branches(all_trees)
 new_paths <- write_trees_txt(rescaled_trees, "data/strep/rescaled_trees", 
                              c(gene_names, "phylo", "ribo_phylo"))
-rescaled_lm_res <- compute_logmap(tree_paths = new_paths,
+rescaled_lm_res_strep <- compute_logmap(tree_paths = new_paths,
                          tree_names = c(gene_names, "phylogenomic", "ribosomal phylogenomic"))
-rescaled_lm_res$base_lab
+rescaled_lm_res_strep$base_lab
 # the new base tree is the phylogenomic tree
-plot_res <- plot_logmap(vectors = rescaled_lm_res$vectors, phylogenomic = length(gene_names) + 1, 
+plot_res <- plot_logmap(vectors = rescaled_lm_res_strep$vectors, phylogenomic = length(gene_names) + 1, 
             other_tree = length(gene_names) + 2, 
             phylogenomic_name = "$\\bar{T}_p^{full}$", 
             other_name = "$\\bar{T}_p^{rib}$",
-            title = "Standardized Streptococcus Trees", group = c(ribs, "other"),
+            title = "PCA of Euclidean representation of rescaled Streptococcus trees", group = c(ribs, "other"),
             tree_names = c(gene_names, "phylogenomic", "ribosomal phylogenomic"),
             alpha = 0.8)
 # add names of trees that have large magnitudes of PC1 or PC2 
-plot_res <- plot_logmap(vectors = rescaled_lm_res$vectors, phylogenomic = length(gene_names) + 1, 
+plot_res <- plot_logmap(vectors = rescaled_lm_res_strep$vectors, phylogenomic = length(gene_names) + 1, 
             other_tree = length(gene_names) + 2, 
             phylogenomic_name = "$\\bar{T}_p^{full}$", 
             other_name = "$\\bar{T}_p^{rib}$",
-            title = "Standardized Streptococcus Trees", group = c(ribs, "other"),
+            title = "PCA of Euclidean representation of rescaled Streptococcus trees", group = c(ribs, "other"),
             tree_names = c(gene_names, "phylogenomic", "ribosomal phylogenomic"),
             alpha = 0.8, 
             trees_to_label = c("eIF-1a", "Ribosomal_S17", "Ribosomal_S21"))
