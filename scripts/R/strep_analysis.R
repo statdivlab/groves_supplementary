@@ -82,11 +82,11 @@ plot_res <- plot_logmap(vectors = new_vectors, phylogenomic = nrow(new_vectors) 
             title = "Streptococcus Trees", group = c(ribs, "other"),
             tree_names = c(gene_names, "phylogenomic", "ribosomal phylogenomic"),
             alpha = 0.8,
-            trees_to_label = c("DUF3270", "DUF1934"))
+            trees_to_label = c("DUF3270", "DUF1934", "EcsB"))
 plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
-ggsave("figures/strep/lm_viz_full_labeled.jpeg")
+ggsave("figures/strep/lm_viz_full_labeled.jpeg", width = 7, height = 3.5, dpi = 300)
 
 # compare the two phylogenomic trees
 # compare BHV distances between all trees 
@@ -156,7 +156,7 @@ plot_res <- plot_logmap(vectors = rescaled_lm_res$vectors, phylogenomic = length
 plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
-ggsave("figures/strep/standardized_lm_plot.jpeg")
+ggsave("figures/strep/standardized_lm_plot.jpeg", width = 7, height = 3.5, dpi = 300)
 
 # check for trees that are not binary
 binary_trees <- check_binary(all_trees)

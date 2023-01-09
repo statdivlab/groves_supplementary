@@ -47,7 +47,7 @@ plot_res <- plot_logmap(vectors = lm_res_v1$vectors, phylogenomic = length(paths
 plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
-ggsave("figures/other_prevotella/lm_viz_run2.png")
+ggsave("figures/other_prevotella/lm_viz_run2.jpeg", width = 7, height = 3.5, dpi = 300)
 
 # version 2 
 # make a vector of paths to .txt files of all trees to go into the plot 
@@ -66,7 +66,7 @@ plot_res <- plot_logmap(vectors = lm_res_v2$vectors, phylogenomic = length(paths
 plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
-ggsave("figures/other_prevotella/lm_viz_run1.png")
+ggsave("figures/other_prevotella/lm_viz_run1.jpeg", width = 7, height = 3.5, dpi = 300)
 # compute log map coordinates for all trees with minimum mean BHV tree as base tree 
 lm_res_v2.2 <- compute_logmap(tree_paths = paths_v2,
                               tree_names = c(gene_names, "phylogenomic"))

@@ -73,7 +73,7 @@ plot_res <- plot_logmap(vectors = new_vectors, phylogenomic = 64, other_tree = 6
 plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
-ggsave("figures/prevotella/lm_viz_labeled.jpeg")
+ggsave("figures/prevotella/lm_viz_labeled.jpeg", width = 7, height = 3.5, dpi = 300)
 
 # plot trees 
 # phylogenomic tree 
