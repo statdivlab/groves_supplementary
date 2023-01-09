@@ -67,7 +67,7 @@ ggsave("figures/prevotella/lm_viz_two_phy.jpeg")
 plot_res <- plot_logmap(vectors = new_vectors, phylogenomic = 64, other_tree = 65, 
             phylogenomic_name = "$\\bar{T}_p^{full}$",
             other_name = "$\\bar{T}_p^{reduced}$", ignore_in_pca = 65,
-            title = "Prevotella Trees", 
+            title = "PCA of Euclidean representation of Prevotella trees", 
             tree_names = c(gene_names, "phylogenomic", "reduced phylogenomic"),
             trees_to_label = c("BacA", "DMRL_synthase", "GTP_cyclohydroI"))
 plot_res$plot + 
@@ -84,7 +84,7 @@ match_df <- data.frame(oldlab = phylogenomic$tip.label,
 phylogenomic_num <- rename_labs(match_df, phylogenomic)
 phylogenomic_num_mid <- phytools::midpoint.root(phylogenomic_num)
 ggtree(phylogenomic_num_mid) + geom_tiplab(size = 2) + 
-  xlim(c(0, 0.55)) + ggtitle("Phylogenomic Tree") + 
+  xlim(c(0, 0.55)) + ggtitle("Phylogenomic tree") + 
   theme(plot.title = element_text(hjust = 0.5))
 ggsave("figures/prevotella/phylogenomic_tree.jpeg")
 # BacA gene tree 
@@ -92,7 +92,7 @@ BacA <- read.tree("data/prevotella/gene_trees/BacA.txt")
 BacA_num <- rename_labs(match_df, BacA)
 BacA_num_mid <- phytools::midpoint.root(BacA_num)
 ggtree(BacA_num_mid) + geom_tiplab(size = 2) + 
-  xlim(c(0, 3.3)) + ggtitle("BacA Tree") + 
+  xlim(c(0, 3.3)) + ggtitle("BacA tree") + 
   theme(plot.title = element_text(hjust = 0.5))
 ggsave("figures/prevotella/BacA_tree.jpeg")
 # DMRL_synthase
@@ -100,7 +100,7 @@ DMRL_synthase <- read.tree("data/prevotella/gene_trees/DMRL_synthase.txt")
 DMRL_synthase_num <- rename_labs(match_df, DMRL_synthase)
 DMRL_synthase_num_mid <- phytools::midpoint.root(DMRL_synthase_num)
 ggtree(DMRL_synthase_num_mid) + geom_tiplab(size = 2) + 
-  xlim(c(0, 6)) + ggtitle("DMRL_synthase Tree") + 
+  xlim(c(0, 6)) + ggtitle("DMRL_synthase tree") + 
   theme(plot.title = element_text(hjust = 0.5))
 ggsave("figures/prevotella/DMRL_synthase.jpeg")
 # GTP_cyclohydroI 
@@ -108,7 +108,7 @@ GTP_cyclohydroI <- read.tree("data/prevotella/gene_trees/GTP_cyclohydroI.txt")
 GTP_cyclohydroI_num <- rename_labs(match_df, GTP_cyclohydroI)
 GTP_cyclohydroI_num_mid <- phytools::midpoint.root(GTP_cyclohydroI_num)
 ggtree(GTP_cyclohydroI_num_mid) + geom_tiplab(size = 2) + 
-  xlim(c(0, 2.8)) + ggtitle("GTP_cyclohydroI Tree") + 
+  xlim(c(0, 2.8)) + ggtitle("GTP_cyclohydroI tree") + 
   theme(plot.title = element_text(hjust = 0.5))
 ggsave("figures/prevotella/GTP_cyclohydroI.jpeg")
 
@@ -119,7 +119,7 @@ support <- check_gene_support(main_tree = phylogenomic,
                   trees = gene_trees,
                   rooted = FALSE) 
 plot_support(phylogenomic_num, support, color_branch = TRUE,
-             title = "Phylogenomic Tree Gene Support", xlim_max = 1.1)
+             title = "Phylogenomic tree", xlim_max = 1.1)
 ggsave("figures/prevotella/gene_tree_support.jpeg")
 
 # try with midpoint rooted tree 
@@ -128,7 +128,7 @@ support_mid <- check_gene_support(main_tree = phylogenomic_num_mid,
                                   trees = gene_trees_mid, 
                                   rooted = TRUE)
 plot_support(phylogenomic_num_mid, support_mid, color_branch = TRUE,
-             title = "Phylogenomic Tree Gene Support", xlim_max = 0.54)
+             title = "Phylogenomic tree", xlim_max = 0.54)
 ggsave("figures/prevotella/gene_tree_support.jpeg")
 
 # Plot bootstrap support values 
@@ -137,7 +137,7 @@ phylo_bs <- phangorn::midpoint(rename_labs(match_df,
 boot <- as.numeric(phylo_bs$node.label)/100
 boot[1] <- 1
 plot_support(phylo_bs, boot, color_branch = TRUE, 
-             title = "Phylogenomic Bootstrap Support", xlim_max = 0.54,
+             title = "Phylogenomic tree", xlim_max = 0.54,
              support_type = "boot")
 ggsave("figures/prevotella/bootstrap_support.jpeg")
 
