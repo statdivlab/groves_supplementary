@@ -41,7 +41,7 @@ lm_res_v1 <- compute_logmap(tree_paths = paths_v1,
 # we can see that the base tree is the phylogenomic tree
 print(lm_res_v1$base_lab)
 plot_res <- plot_logmap(vectors = lm_res_v1$vectors, phylogenomic = length(paths_v1),
-            title = "PCA of Euclidean representation of Prevotella trees", tree_names = c(gene_names, "phylogenomic"),
+            title = "PCA of Euclidean representation of additional set of Prevotella trees", tree_names = c(gene_names, "phylogenomic"),
             phylogenomic_name = "$\\bar{T}_p$, run 2",
             trees_to_label = c("BacA"))
 plot_res$plot + 
@@ -60,7 +60,7 @@ lm_res_v2 <- compute_logmap(tree_paths = paths_v2,
                          base_lab = "phylogenomic")
 print(lm_res_v2$base_lab)
 plot_res <- plot_logmap(vectors = lm_res_v2$vectors, phylogenomic = length(paths_v2),
-            title = "PCA of Euclidean representation of Prevotella trees", tree_names = c(gene_names, "phylogenomic"),
+            title = "PCA of Euclidean representation of additional set of Prevotella trees", tree_names = c(gene_names, "phylogenomic"),
             phylogenomic_name = "$\\bar{T}_p$, run 1",
             trees_to_label = "BacA")
 plot_res$plot + 
