@@ -187,7 +187,7 @@ mean(dist_vec < phy_bhv)
 MDS_res <- compute_MDS(dist_matrix = bhv_dists,
                          tree_names = c(gene_names, "phylogenomic"))
 MDS_plot <- plot_MDS(df = MDS_res$df, phylogenomic = 64,
-  title = "Phylogenomic base tree", tree_names = c(gene_names, "phylogenomic"),
+  title = "MDS of Prevotella trees", tree_names = c(gene_names, "phylogenomic"),
   phylogenomic_name = "$\\bar{T}_p^{full}$") 
 MDS_plot + 
   theme_bw() + 
