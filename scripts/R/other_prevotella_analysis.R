@@ -1,6 +1,6 @@
 # This code produces the figures in the section 5 of [..... update here]
 # Note that this script will not run because the data is not included in this repository. 
-# This is because unlike the two data analyses, this is not publically available data. 
+# This is because unlike the two data analyses, this is not publicly available data. 
 
 # load required packages
 # install.packages("ape")
@@ -70,7 +70,7 @@ ggsave("figures/other_prevotella/lm_viz_run1.jpeg", width = 7, height = 3.5, dpi
 # compute log map coordinates for all trees with minimum mean BHV tree as base tree 
 lm_res_v2.2 <- compute_logmap(tree_paths = paths_v2,
                               tree_names = c(gene_names, "phylogenomic"))
-# we can see the base tree is HSP90
+# we can see the base tree is Peptidase_M19
 print(lm_res_v2.2$base_lab)
 plot_res <- plot_logmap(vectors = lm_res_v2.2$vectors, phylogenomic = length(paths_v2),
             title = "", tree_names = c(gene_names, "phylogenomic"),
@@ -102,3 +102,33 @@ median(support_v2)
 plot_support(concat_v2, support_v2, color_branch = TRUE,
              title = "Phylogenomic Tree Gene Support", xlim_max = 1.1)
 ggsave("figures/other_prevotella/gene_tree_support_v2.png")
+
+# compare topologies of both phylogenomic trees to the rest of the trees
+# version 1 
+rf_v1 <- as.matrix(phangorn::RF.dist(c(gene_trees, concat_v1)))
+diag(rf_v1) <- NA
+rowMeans(rf_v1, na.rm = TRUE)
+# the phylogenomic tree has a mean RF distance from other trees of 66
+which.min(rowMeans(rf_v1, na.rm = TRUE))
+# the phylogenomic tree has the lowest mean RF distance from other trees
+# version 2
+rf_v2 <- as.matrix(phangorn::RF.dist(c(gene_trees, concat_v2)))
+diag(rf_v2) <- NA
+rowMeans(rf_v2, na.rm = TRUE)
+# the phylogenomic tree has a mean RF distance from other trees of 108
+which.max(rowMeans(rf_v2, na.rm = TRUE))
+# the phylogenomic tree has the highest mean RF distance from other trees
+
+# compare BHV distances
+# version 1
+merge_txt(paths_v1, "../TreeViz/data/prevotella/analysis_data/all_trees_v1.txt")
+bhv_dists_v1 <- compute_geodesic("../TreeViz/data/prevotella/analysis_data/all_trees_v1.txt")
+sq_dists_v1 <- bhv_dists_v1^2
+diag(sq_dists_v1) <- NA
+rowMeans(sq_dists_v1, na.rm = TRUE)
+# version 2
+merge_txt(paths_v2, "../TreeViz/data/prevotella/analysis_data/all_trees_v2.txt")
+bhv_dists_v2 <- compute_geodesic("../TreeViz/data/prevotella/analysis_data/all_trees_v2.txt")
+sq_dists_v2 <- bhv_dists_v2^2
+diag(sq_dists_v2) <- NA
+rowMeans(sq_dists_v2, na.rm = TRUE)
