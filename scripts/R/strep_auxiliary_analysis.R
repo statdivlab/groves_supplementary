@@ -205,3 +205,12 @@ ggtree(phylo_mid) + geom_tiplab(size = 2) +
   xlim(c(0, .4)) + ggtitle("Phylogenomic tree") + 
   theme(plot.title = element_text(hjust = 0.5))
 ggsave("figures/strep/phylogenomic_tree.jpeg")
+# color those internal edges
+order_df <- data.frame(phylo_rank = rank(phylo$edge.length),
+                       vector_rank = rank(lm_res_strep$vectors[197,]))
+tree_ind <- order_df$phylo_rank[which(order_df$vector_rank == 78)]
+ggtree(phylo_mid) + geom_tiplab(size = 2) + 
+  xlim(c(0, .4)) + ggtitle("Phylogenomic tree") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  geom_highlight(node = phylo$edge[tree_ind, 2], fill = "red")
+ggsave("figures/strep/phylo_with_lab.jpeg")
