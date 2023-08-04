@@ -117,7 +117,12 @@ diag(rf_v2) <- NA
 rowMeans(rf_v2, na.rm = TRUE)
 # the phylogenomic tree has a mean RF distance from other trees of 108
 which.max(rowMeans(rf_v2, na.rm = TRUE))
-# the phylogenomic tree has the highest mean RF distance from other trees
+
+rf_gene <- rf_v1[1:65, 1:65]
+mean(rf_gene, na.rm = TRUE)
+summary(as.vector(rf_gene), na.rm = TRUE)
+rf_phylo <- phangorn::RF.dist(concat_v1, concat_v2)
+mean(as.vector(rf_gene) > rf_phylo, na.rm = TRUE)
 
 # compare BHV distances
 # version 1

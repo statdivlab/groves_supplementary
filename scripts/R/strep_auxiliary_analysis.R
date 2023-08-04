@@ -214,3 +214,93 @@ ggtree(phylo_mid) + geom_tiplab(size = 2) +
   theme(plot.title = element_text(hjust = 0.5)) + 
   geom_highlight(node = phylo$edge[tree_ind, 2], fill = "red")
 ggsave("figures/strep/phylo_with_lab.jpeg")
+
+# use a randomly generated tree as the base tree
+# seed of 1
+set.seed(1)
+rand_tree1 <- rtree(length(all_trees[[1]]$tip.label), rooted = FALSE)
+rand_tree1$tip.label <- all_trees[[1]]$tip.label
+write.tree(rand_tree1, "data/strep/rand_tree1.txt")
+rand_tree1_lm_res <- compute_logmap(tree_paths = c(paths, "data/strep/rand_tree1.txt"),
+                                    tree_names = c(gene_names, "phylogenomic", "random"),
+                                    base_lab = "random")
+rand_tree1_plot_res <- plot_logmap(vectors = rand_tree1_lm_res$vectors,
+                                   phylogenomic = 197,
+                                   phylogenomic_name = "$\\bar{T}_p^{full}$",
+                                   title = "Random base tree", 
+                                   tree_names = c(gene_names, "phylogenomic", "random"),
+                                   other_tree = 198,
+                                   other_name = "random") 
+rand_tree1_plot_res$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/strep/lm_viz_rand_base1.png")
+RF_dists <- as.matrix(phangorn::RF.dist(c(all_trees, rand_tree1)))
+diag(RF_dists) <- NA
+rowMeans(RF_dists, na.rm = TRUE)
+# seed of 2
+set.seed(2)
+rand_tree2 <- rtree(length(all_trees[[1]]$tip.label), rooted = FALSE)
+rand_tree2$tip.label <- all_trees[[1]]$tip.label
+write.tree(rand_tree2, "data/strep/rand_tree2.txt")
+rand_tree2_lm_res <- compute_logmap(tree_paths = c(paths, "data/strep/rand_tree2.txt"),
+                                    tree_names = c(gene_names, "phylogenomic", "random"),
+                                    base_lab = "random")
+rand_tree2_plot_res <- plot_logmap(vectors = rand_tree2_lm_res$vectors,
+                                   phylogenomic = 197,
+                                   phylogenomic_name = "$\\bar{T}_p^{full}$",
+                                   title = "Random base tree", 
+                                   tree_names = c(gene_names, "phylogenomic", "random"),
+                                   other_tree = 198,
+                                   other_name = "random") 
+rand_tree2_plot_res$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/prevotella/lm_viz_rand_base2.png")
+RF_dists <- as.matrix(phangorn::RF.dist(c(all_trees, rand_tree2)))
+diag(RF_dists) <- NA
+rowMeans(RF_dists, na.rm = TRUE)
+# seed of 3
+set.seed(3)
+rand_tree3 <- rtree(length(all_trees[[1]]$tip.label), rooted = FALSE)
+rand_tree3$tip.label <- all_trees[[1]]$tip.label
+write.tree(rand_tree3, "data/strep/rand_tree3.txt")
+rand_tree3_lm_res <- compute_logmap(tree_paths = c(paths, "data/strep/rand_tree3.txt"),
+                                    tree_names = c(gene_names, "phylogenomic", "random"),
+                                    base_lab = "random")
+rand_tree3_plot_res <- plot_logmap(vectors = rand_tree3_lm_res$vectors,
+                                   phylogenomic = 197,
+                                   phylogenomic_name = "$\\bar{T}_p^{full}$",
+                                   title = "Random base tree", 
+                                   tree_names = c(gene_names, "phylogenomic", "random"),
+                                   other_tree = 198,
+                                   other_name = "random") 
+rand_tree3_plot_res$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/prevotella/lm_viz_rand_base3.png")
+RF_dists <- as.matrix(phangorn::RF.dist(c(all_trees, rand_tree3)))
+diag(RF_dists) <- NA
+rowMeans(RF_dists, na.rm = TRUE)
+# seed of 4
+set.seed(4)
+rand_tree4 <- rtree(length(all_trees[[1]]$tip.label), rooted = FALSE)
+rand_tree4$tip.label <- all_trees[[1]]$tip.label
+write.tree(rand_tree4, "data/strep/rand_tree4.txt")
+rand_tree4_lm_res <- compute_logmap(tree_paths = c(paths, "data/strep/rand_tree4.txt"),
+                                    tree_names = c(gene_names, "phylogenomic", "random"),
+                                    base_lab = "random")
+rand_tree4_plot_res <- plot_logmap(vectors = rand_tree4_lm_res$vectors,
+                                   phylogenomic = 197,
+                                   phylogenomic_name = "$\\bar{T}_p^{full}$",
+                                   title = "Random base tree", 
+                                   tree_names = c(gene_names, "phylogenomic", "random"),
+                                   other_tree = 198,
+                                   other_name = "random") 
+rand_tree4_plot_res$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/prevotella/lm_viz_rand_base4.png")
+RF_dists <- as.matrix(phangorn::RF.dist(c(all_trees, rand_tree4)))
+diag(RF_dists) <- NA
+rowMeans(RF_dists, na.rm = TRUE)

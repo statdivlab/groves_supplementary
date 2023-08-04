@@ -169,6 +169,59 @@ GTP_cyclohydroI_plot_res$plot +
   theme(plot.title = element_text(hjust = 0.5))
 ggsave("figures/prevotella/lm_viz_GTP_cyclohydroI_base.png")
 
+# compute RF distances (measure of topology only distance)
+RF_dists <- as.matrix(phangorn::RF.dist(all_trees))
+diag(RF_dists) <- NA
+mean_dists <- rowMeans(RF_dists, na.rm = TRUE)
+RF_rank_df <- data.frame(rank = rank(mean_dists), mean_dist = mean_dists, 
+                      name = c(gene_names, "phylogenomic")) %>%
+  arrange(rank)
+head(RF_rank_df)
+tail(RF_rank_df)
+
+# look at base tree as tree with largest mean RF distance from other trees
+# log map visualization with dUTPase as base tree 
+dUTPase_lm_res <- compute_logmap(tree_paths = paths,
+                                         tree_names = c(gene_names, "phylogenomic"),
+                                         base_lab = "dUTPase")
+dUTPase_plot_res <- plot_logmap(vectors = dUTPase_lm_res$vectors, phylogenomic = 64,
+                                        title = "dUTPase base tree", tree_names = c(gene_names, "phylogenomic"),
+                                        phylogenomic_name = "$\\bar{T}_p^{full}$",
+                                        other_tree = which(gene_names == "dUTPase"),
+                                        other_name = "dUTPase") 
+dUTPase_plot_res$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/prevotella/lm_viz_dUTPase_base.png")
+
+# log map visualization with Tyr_Deacylase as base tree 
+Tyr_Deacylase_lm_res <- compute_logmap(tree_paths = paths,
+                                 tree_names = c(gene_names, "phylogenomic"),
+                                 base_lab = "Tyr_Deacylase")
+Tyr_Deacylase_plot_res <- plot_logmap(vectors = Tyr_Deacylase_lm_res$vectors, phylogenomic = 64,
+                                title = "Tyr_Deacylase base tree", tree_names = c(gene_names, "phylogenomic"),
+                                phylogenomic_name = "$\\bar{T}_p^{full}$",
+                                other_tree = which(gene_names == "Tyr_Deacylase"),
+                                other_name = "Tyr_Deacylase") 
+Tyr_Deacylase_plot_res$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/prevotella/lm_viz_Tyr_Deacylase_base.png")
+
+# log map visualization with DHquinase_II as base tree 
+DHquinase_II_lm_res <- compute_logmap(tree_paths = paths,
+                                       tree_names = c(gene_names, "phylogenomic"),
+                                       base_lab = "DHquinase_II")
+DHquinase_II_plot_res <- plot_logmap(vectors = DHquinase_II_lm_res$vectors, phylogenomic = 64,
+                                      title = "DHquinase_II base tree", tree_names = c(gene_names, "phylogenomic"),
+                                      phylogenomic_name = "$\\bar{T}_p^{full}$",
+                                      other_tree = which(gene_names == "DHquinase_II"),
+                                      other_name = "DHquinase_II") 
+DHquinase_II_plot_res$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/prevotella/lm_viz_DHquinase_II_base.png")
+
 # also investigate Frechet mean tree
 fm_output <- system2("java", args = c("-jar", "scripts/jar/SturmMean.jar", "-o", 
                                       "data/prevotella/frechet_mean_tree.txt", 
@@ -193,3 +246,93 @@ MDS_plot +
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
 ggsave("figures/prevotella/MDS_plot.png")
+
+# use a randomly generated tree as the base tree
+# seed of 1
+set.seed(1)
+rand_tree1 <- rtree(length(all_trees[[1]]$tip.label), rooted = FALSE)
+rand_tree1$tip.label <- all_trees[[1]]$tip.label
+write.tree(rand_tree1, "data/prevotella/rand_tree1.txt")
+rand_tree1_lm_res <- compute_logmap(tree_paths = c(paths, "data/prevotella/rand_tree1.txt"),
+                              tree_names = c(gene_names, "phylogenomic", "random"),
+                              base_lab = "random")
+rand_tree1_plot_res <- plot_logmap(vectors = rand_tree1_lm_res$vectors,
+                                   phylogenomic = 64,
+                                   phylogenomic_name = "$\\bar{T}_p^{full}$",
+                                   title = "Random base tree", 
+                                   tree_names = c(gene_names, "phylogenomic", "random"),
+                                   other_tree = 65,
+                                   other_name = "random") 
+rand_tree1_plot_res$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/prevotella/lm_viz_rand_base1.png")
+RF_dists <- as.matrix(phangorn::RF.dist(c(all_trees, rand_tree1)))
+diag(RF_dists) <- NA
+rowMeans(RF_dists, na.rm = TRUE)
+# seed of 2
+set.seed(2)
+rand_tree2 <- rtree(length(all_trees[[1]]$tip.label), rooted = FALSE)
+rand_tree2$tip.label <- all_trees[[1]]$tip.label
+write.tree(rand_tree2, "data/prevotella/rand_tree2.txt")
+rand_tree2_lm_res <- compute_logmap(tree_paths = c(paths, "data/prevotella/rand_tree2.txt"),
+                                    tree_names = c(gene_names, "phylogenomic", "random"),
+                                    base_lab = "random")
+rand_tree2_plot_res <- plot_logmap(vectors = rand_tree2_lm_res$vectors,
+                                   phylogenomic = 64,
+                                   phylogenomic_name = "$\\bar{T}_p^{full}$",
+                                   title = "Random base tree", 
+                                   tree_names = c(gene_names, "phylogenomic", "random"),
+                                   other_tree = 65,
+                                   other_name = "random") 
+rand_tree2_plot_res$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/prevotella/lm_viz_rand_base2.png")
+RF_dists <- as.matrix(phangorn::RF.dist(c(all_trees, rand_tree2)))
+diag(RF_dists) <- NA
+rowMeans(RF_dists, na.rm = TRUE)
+# seed of 3
+set.seed(3)
+rand_tree3 <- rtree(length(all_trees[[1]]$tip.label), rooted = FALSE)
+rand_tree3$tip.label <- all_trees[[1]]$tip.label
+write.tree(rand_tree3, "data/prevotella/rand_tree3.txt")
+rand_tree3_lm_res <- compute_logmap(tree_paths = c(paths, "data/prevotella/rand_tree3.txt"),
+                                    tree_names = c(gene_names, "phylogenomic", "random"),
+                                    base_lab = "random")
+rand_tree3_plot_res <- plot_logmap(vectors = rand_tree3_lm_res$vectors,
+                                   phylogenomic = 64,
+                                   phylogenomic_name = "$\\bar{T}_p^{full}$",
+                                   title = "Random base tree", 
+                                   tree_names = c(gene_names, "phylogenomic", "random"),
+                                   other_tree = 65,
+                                   other_name = "random") 
+rand_tree3_plot_res$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/prevotella/lm_viz_rand_base3.png")
+RF_dists <- as.matrix(phangorn::RF.dist(c(all_trees, rand_tree3)))
+diag(RF_dists) <- NA
+rowMeans(RF_dists, na.rm = TRUE)
+# seed of 4
+set.seed(4)
+rand_tree4 <- rtree(length(all_trees[[1]]$tip.label), rooted = FALSE)
+rand_tree4$tip.label <- all_trees[[1]]$tip.label
+write.tree(rand_tree4, "data/prevotella/rand_tree4.txt")
+rand_tree4_lm_res <- compute_logmap(tree_paths = c(paths, "data/prevotella/rand_tree4.txt"),
+                                    tree_names = c(gene_names, "phylogenomic", "random"),
+                                    base_lab = "random")
+rand_tree4_plot_res <- plot_logmap(vectors = rand_tree4_lm_res$vectors,
+                                   phylogenomic = 64,
+                                   phylogenomic_name = "$\\bar{T}_p^{full}$",
+                                   title = "Random base tree", 
+                                   tree_names = c(gene_names, "phylogenomic", "random"),
+                                   other_tree = 65,
+                                   other_name = "random") 
+rand_tree4_plot_res$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/prevotella/lm_viz_rand_base4.png")
+RF_dists <- as.matrix(phangorn::RF.dist(c(all_trees, rand_tree4)))
+diag(RF_dists) <- NA
+rowMeans(RF_dists, na.rm = TRUE)
