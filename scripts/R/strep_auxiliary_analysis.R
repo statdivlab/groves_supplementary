@@ -256,7 +256,7 @@ rand_tree2_plot_res <- plot_logmap(vectors = rand_tree2_lm_res$vectors,
 rand_tree2_plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
-ggsave("figures/prevotella/lm_viz_rand_base2.png")
+ggsave("figures/strep/lm_viz_rand_base2.png")
 RF_dists <- as.matrix(phangorn::RF.dist(c(all_trees, rand_tree2)))
 diag(RF_dists) <- NA
 rowMeans(RF_dists, na.rm = TRUE)
@@ -278,7 +278,7 @@ rand_tree3_plot_res <- plot_logmap(vectors = rand_tree3_lm_res$vectors,
 rand_tree3_plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
-ggsave("figures/prevotella/lm_viz_rand_base3.png")
+ggsave("figures/strep/lm_viz_rand_base3.png")
 RF_dists <- as.matrix(phangorn::RF.dist(c(all_trees, rand_tree3)))
 diag(RF_dists) <- NA
 rowMeans(RF_dists, na.rm = TRUE)
@@ -300,7 +300,7 @@ rand_tree4_plot_res <- plot_logmap(vectors = rand_tree4_lm_res$vectors,
 rand_tree4_plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
-ggsave("figures/prevotella/lm_viz_rand_base4.png")
+ggsave("figures/strep/lm_viz_rand_base4.png")
 RF_dists <- as.matrix(phangorn::RF.dist(c(all_trees, rand_tree4)))
 diag(RF_dists) <- NA
 rowMeans(RF_dists, na.rm = TRUE)
