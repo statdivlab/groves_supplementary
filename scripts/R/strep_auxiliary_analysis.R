@@ -162,11 +162,15 @@ phy_bhv <- phylo_frechet_dist[197, 198]
 mean(dist_vec < phy_bhv)
 
 # run MDS on the same data
+ribs <- grep("Ribosom", gene_names)
+ribs <- ifelse(1:length(paths) %in% ribs, "ribosomal", "other")
 MDS_res <- compute_MDS(dist_matrix = bhv_dists,
                        tree_names = c(gene_names, "phylogenomic"))
 MDS_plot <- plot_MDS(df = MDS_res$df, phylogenomic = 64,
+                     group = ribs, alpha = 0.8,
                      title = "MDS of Streptococcus trees", tree_names = c(gene_names, "phylogenomic"),
-                     phylogenomic_name = "$\\bar{T}_p^{full}$") 
+                     phylogenomic_name = "$\\bar{T}_p^{full}$",
+                     trees_to_label = c("DUF3270", "EcsB", "DUF1934")) 
 MDS_plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))

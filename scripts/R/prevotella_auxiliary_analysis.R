@@ -241,7 +241,8 @@ MDS_res <- compute_MDS(dist_matrix = bhv_dists,
                          tree_names = c(gene_names, "phylogenomic"))
 MDS_plot <- plot_MDS(df = MDS_res$df, phylogenomic = 64,
   title = "MDS of Prevotella trees", tree_names = c(gene_names, "phylogenomic"),
-  phylogenomic_name = "$\\bar{T}_p^{full}$") 
+  phylogenomic_name = "$\\bar{T}_p^{full}$",
+  trees_to_label = c("BacA", "DMRL_synthase", "GTP_cyclohydroI")) 
 MDS_plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
