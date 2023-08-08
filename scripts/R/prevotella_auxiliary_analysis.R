@@ -263,7 +263,10 @@ rand_tree1_plot_res <- plot_logmap(vectors = rand_tree1_lm_res$vectors,
                                    title = "Random base tree", 
                                    tree_names = c(gene_names, "phylogenomic", "random"),
                                    other_tree = 65,
-                                   other_name = "random") 
+                                   other_name = "random",
+                                   trees_to_label = c("BacA", 
+                                                      "DMRL_synthase",
+                                                      "GTP_cyclohydroI")) 
 rand_tree1_plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))

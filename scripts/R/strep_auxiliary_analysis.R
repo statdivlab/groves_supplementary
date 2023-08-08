@@ -29,6 +29,9 @@ gene_names <- stringr::str_sub(list.files("data/strep/gene_trees/"), 1, -5)
 # make a vector of paths to .txt files of all trees to go into the plot 
 paths <- c(paste0("data/strep/gene_trees/", list.files("data/strep/gene_trees")),
            "data/strep/phylogenomic_trees/concat_tree.txt")
+# make a vector to indicate whether each tree is ribosomal or not
+ribs <- grep("Ribosom", gene_names)
+ribs <- ifelse(1:length(paths) %in% ribs, "ribosomal", "other")
 # compute log map coordinates for all trees 
 lm_res_strep <- compute_logmap(tree_paths = paths,
                                tree_names = c(gene_names, "phylogenomic"))
@@ -36,7 +39,8 @@ lm_res_strep <- compute_logmap(tree_paths = paths,
 print(lm_res_strep$base_lab)
 plot_res <- plot_logmap(vectors = lm_res_strep$vectors, phylogenomic = length(paths),
                         title = "Phylogenomic base tree", tree_names = c(gene_names, "phylogenomic"),
-                        phylogenomic_name = "$\\bar{T}_p^{full}$")
+                        phylogenomic_name = "$\\bar{T}_p^{full}$",
+                        group = ribs)
 plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
@@ -66,7 +70,8 @@ MnmE_helical_plot_res <- plot_logmap(vectors = MnmE_helical_lm_res$vectors, phyl
                              title = "MnmE_helical base tree", tree_names = c(gene_names, "phylogenomic"),
                              phylogenomic_name = "$\\bar{T}_p^{full}$",
                              other_tree = which(gene_names == "MnmE_helical"),
-                             other_name = "MnmE_helical") 
+                             other_name = "MnmE_helical",
+                             group = ribs) 
 MnmE_helical_plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
@@ -80,7 +85,8 @@ NFACT_N_plot_res <- plot_logmap(vectors = NFACT_N_lm_res$vectors, phylogenomic =
                                      title = "NFACT_N base tree", tree_names = c(gene_names, "phylogenomic"),
                                      phylogenomic_name = "$\\bar{T}_p^{full}$",
                                      other_tree = which(gene_names == "NFACT_N"),
-                                     other_name = "NFACT_N") 
+                                     other_name = "NFACT_N",
+                                     group = ribs) 
 NFACT_N_plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
@@ -100,7 +106,8 @@ NAPRTase_plot_res <- plot_logmap(vectors = NAPRTase_lm_res$vectors, phylogenomic
                                 title = "NAPRTase base tree", tree_names = c(gene_names, "phylogenomic"),
                                 phylogenomic_name = "$\\bar{T}_p^{full}$",
                                 other_tree = which(gene_names == "NAPRTase"),
-                                other_name = "NAPRTase") 
+                                other_name = "NAPRTase",
+                                group = ribs) 
 NAPRTase_plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
@@ -127,7 +134,8 @@ EcsB_plot_res <- plot_logmap(vectors = EcsB_lm_res$vectors, phylogenomic = 64,
                                  title = "EcsB base tree", tree_names = c(gene_names, "phylogenomic"),
                                  phylogenomic_name = "$\\bar{T}_p^{full}$",
                                  other_tree = which(gene_names == "EcsB"),
-                                 other_name = "EcsB") 
+                                 other_name = "EcsB",
+                                 group = ribs) 
 EcsB_plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
@@ -141,7 +149,8 @@ DUF1934_plot_res <- plot_logmap(vectors = DUF1934_lm_res$vectors, phylogenomic =
                              title = "DUF1934 base tree", tree_names = c(gene_names, "phylogenomic"),
                              phylogenomic_name = "$\\bar{T}_p^{full}$",
                              other_tree = which(gene_names == "DUF1934"),
-                             other_name = "DUF1934") 
+                             other_name = "DUF1934",
+                             group = ribs) 
 DUF1934_plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
@@ -162,8 +171,6 @@ phy_bhv <- phylo_frechet_dist[197, 198]
 mean(dist_vec < phy_bhv)
 
 # run MDS on the same data
-ribs <- grep("Ribosom", gene_names)
-ribs <- ifelse(1:length(paths) %in% ribs, "ribosomal", "other")
 MDS_res <- compute_MDS(dist_matrix = bhv_dists,
                        tree_names = c(gene_names, "phylogenomic"))
 MDS_plot <- plot_MDS(df = MDS_res$df, phylogenomic = 64,
@@ -178,8 +185,6 @@ ggsave("figures/strep/MDS_plot.png")
 
 # run Fisher's discriminant analysis on log map vectors between ribosomal and 
 # non-ribomsomal genes 
-ribs <- grep("Ribosom", gene_names)
-ribs <- ifelse(1:length(paths) %in% ribs, "ribosomal", "other")
 lm_df <- as.data.frame(lm_res_strep$vectors)
 lm_df$rib <- ribs
 # run LDA on 75% of trees 
@@ -234,7 +239,10 @@ rand_tree1_plot_res <- plot_logmap(vectors = rand_tree1_lm_res$vectors,
                                    title = "Random base tree", 
                                    tree_names = c(gene_names, "phylogenomic", "random"),
                                    other_tree = 198,
-                                   other_name = "random") 
+                                   other_name = "random",
+                                   group = c(ribs, "other"),
+                                   alpha = 0.8,
+                                   trees_to_label = c("DUF3270", "EcsB", "DUF1934")) 
 rand_tree1_plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
