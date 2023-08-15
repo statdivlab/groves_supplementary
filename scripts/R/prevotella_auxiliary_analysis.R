@@ -249,10 +249,15 @@ MDS_plot +
 ggsave("figures/prevotella/MDS_plot.png")
 
 # use a randomly generated tree as the base tree
+# get empirical distribution of branch lengths in tree dataset 
+all_branches <- unlist(lapply(all_trees, function(tree) {tree$edge.length}))
+n_br <- length(all_trees[[1]]$edge.length)
+
 # seed of 1
 set.seed(1)
-rand_tree1 <- rtree(length(all_trees[[1]]$tip.label), rooted = FALSE)
-rand_tree1$tip.label <- all_trees[[1]]$tip.label
+branch_1 <- sample(x = all_branches, size = n_br)
+rand_tree1 <- rtree(n = length(all_trees[[1]]$tip.label), rooted = FALSE,
+                    br = branch_1, tip.label = all_trees[[1]]$tip.label)
 write.tree(rand_tree1, "data/prevotella/rand_tree1.txt")
 rand_tree1_lm_res <- compute_logmap(tree_paths = c(paths, "data/prevotella/rand_tree1.txt"),
                               tree_names = c(gene_names, "phylogenomic", "random"),
@@ -276,8 +281,9 @@ diag(RF_dists) <- NA
 rowMeans(RF_dists, na.rm = TRUE)
 # seed of 2
 set.seed(2)
-rand_tree2 <- rtree(length(all_trees[[1]]$tip.label), rooted = FALSE)
-rand_tree2$tip.label <- all_trees[[1]]$tip.label
+branch_2 <- sample(x = all_branches, size = n_br)
+rand_tree2 <- rtree(n = length(all_trees[[1]]$tip.label), rooted = FALSE,
+                    br = branch_2, tip.label = all_trees[[1]]$tip.label)
 write.tree(rand_tree2, "data/prevotella/rand_tree2.txt")
 rand_tree2_lm_res <- compute_logmap(tree_paths = c(paths, "data/prevotella/rand_tree2.txt"),
                                     tree_names = c(gene_names, "phylogenomic", "random"),
@@ -298,8 +304,9 @@ diag(RF_dists) <- NA
 rowMeans(RF_dists, na.rm = TRUE)
 # seed of 3
 set.seed(3)
-rand_tree3 <- rtree(length(all_trees[[1]]$tip.label), rooted = FALSE)
-rand_tree3$tip.label <- all_trees[[1]]$tip.label
+branch_3 <- sample(x = all_branches, size = n_br)
+rand_tree3 <- rtree(n = length(all_trees[[1]]$tip.label), rooted = FALSE,
+                    br = branch_3, tip.label = all_trees[[1]]$tip.label)
 write.tree(rand_tree3, "data/prevotella/rand_tree3.txt")
 rand_tree3_lm_res <- compute_logmap(tree_paths = c(paths, "data/prevotella/rand_tree3.txt"),
                                     tree_names = c(gene_names, "phylogenomic", "random"),
@@ -320,8 +327,9 @@ diag(RF_dists) <- NA
 rowMeans(RF_dists, na.rm = TRUE)
 # seed of 4
 set.seed(4)
-rand_tree4 <- rtree(length(all_trees[[1]]$tip.label), rooted = FALSE)
-rand_tree4$tip.label <- all_trees[[1]]$tip.label
+branch_4 <- sample(x = all_branches, size = n_br)
+rand_tree4 <- rtree(n = length(all_trees[[1]]$tip.label), rooted = FALSE,
+                    br = branch_4, tip.label = all_trees[[1]]$tip.label)
 write.tree(rand_tree4, "data/prevotella/rand_tree4.txt")
 rand_tree4_lm_res <- compute_logmap(tree_paths = c(paths, "data/prevotella/rand_tree4.txt"),
                                     tree_names = c(gene_names, "phylogenomic", "random"),
@@ -340,3 +348,87 @@ ggsave("figures/prevotella/lm_viz_rand_base4.png")
 RF_dists <- as.matrix(phangorn::RF.dist(c(all_trees, rand_tree4)))
 diag(RF_dists) <- NA
 rowMeans(RF_dists, na.rm = TRUE)
+
+# run tSNE
+set.seed(1)
+tsne_plot1 <- plot_tsne(vectors = lm_res$vectors, phylogenomic = 64,
+                        title = "tSNE of Prevotella trees", tree_names = c(gene_names, "phylogenomic"),
+                        phylogenomic_name = "$\\bar{T}_p^{full}$",
+                        trees_to_label = c("BacA", "DMRL_synthase",
+                                           "GTP_cyclohydroI"))
+tsne_plot1$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/prevotella/tsne1.png")
+set.seed(2)
+tsne_plot2 <- plot_tsne(vectors = lm_res$vectors, phylogenomic = 64,
+                        title = "tSNE of Prevotella trees", tree_names = c(gene_names, "phylogenomic"),
+                        phylogenomic_name = "$\\bar{T}_p^{full}$",
+                        trees_to_label = c("BacA", "DMRL_synthase",
+                                           "GTP_cyclohydroI"))
+tsne_plot2$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/prevotella/tsne2.png")
+set.seed(3)
+tsne_plot3 <- plot_tsne(vectors = lm_res$vectors, phylogenomic = 64,
+                        title = "tSNE of Prevotella trees", tree_names = c(gene_names, "phylogenomic"),
+                        phylogenomic_name = "$\\bar{T}_p^{full}$",
+                        trees_to_label = c("BacA", "DMRL_synthase",
+                                           "GTP_cyclohydroI"))
+tsne_plot3$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/prevotella/tsne3.png")
+set.seed(4)
+tsne_plot4 <- plot_tsne(vectors = lm_res$vectors, phylogenomic = 64,
+                        title = "tSNE of Prevotella trees", tree_names = c(gene_names, "phylogenomic"),
+                        phylogenomic_name = "$\\bar{T}_p^{full}$",
+                        trees_to_label = c("BacA", "DMRL_synthase",
+                                           "GTP_cyclohydroI"))
+tsne_plot4$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/prevotella/tsne4.png")
+
+# run UMAP
+set.seed(1)
+umap_plot1 <- plot_umap(vectors = lm_res$vectors, phylogenomic = 64,
+                       title = "UMAP of Prevotella trees", tree_names = c(gene_names, "phylogenomic"),
+                       phylogenomic_name = "$\\bar{T}_p^{full}$",
+                       trees_to_label = c("BacA", "DMRL_synthase",
+                                          "GTP_cyclohydroI"))
+umap_plot1$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/prevotella/umap1.png")
+set.seed(2)
+umap_plot2 <- plot_umap(vectors = lm_res$vectors, phylogenomic = 64,
+                        title = "UMAP of Prevotella trees", tree_names = c(gene_names, "phylogenomic"),
+                        phylogenomic_name = "$\\bar{T}_p^{full}$",
+                        trees_to_label = c("BacA", "DMRL_synthase",
+                                           "GTP_cyclohydroI"))
+umap_plot2$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/prevotella/umap2.png")
+set.seed(3)
+umap_plot3 <- plot_umap(vectors = lm_res$vectors, phylogenomic = 64,
+                        title = "UMAP of Prevotella trees", tree_names = c(gene_names, "phylogenomic"),
+                        phylogenomic_name = "$\\bar{T}_p^{full}$",
+                        trees_to_label = c("BacA", "DMRL_synthase",
+                                           "GTP_cyclohydroI"))
+umap_plot3$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/prevotella/umap3.png")
+set.seed(4)
+umap_plot4 <- plot_umap(vectors = lm_res$vectors, phylogenomic = 64,
+                        title = "UMAP of Prevotella trees", tree_names = c(gene_names, "phylogenomic"),
+                        phylogenomic_name = "$\\bar{T}_p^{full}$",
+                        trees_to_label = c("BacA", "DMRL_synthase",
+                                           "GTP_cyclohydroI"))
+umap_plot4$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/prevotella/umap4.png")

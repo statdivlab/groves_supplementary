@@ -186,7 +186,7 @@ ggsave("figures/strep/MDS_plot.png")
 # run Fisher's discriminant analysis on log map vectors between ribosomal and 
 # non-ribomsomal genes 
 lm_df <- as.data.frame(lm_res_strep$vectors)
-lm_df$rib <- ribs
+lm_df$rib <- as.factor(ribs)
 # run LDA on 75% of trees 
 set.seed(1)
 n <- nrow(lm_df)
@@ -204,31 +204,89 @@ rank_df <- data.frame(coord = 1:nrow(lda_res$scaling),
   arrange(desc(rank))
 head(rank_df)
 # we can see that the log map vectors with the largest scalings used to 
-# separate the two classes are vectors 78, 17, and 86. We could map these back
+# separate the two classes are vectors 79, 17, and 86. We could map these back
 # to tree space and see which internal edges of the base tree map to edges 
-# 78, 17, and 86
+# 79, 17, and 86
 phylo <- read.tree("data/strep/phylogenomic_trees/concat_tree.txt")
-phylo_mid <- phytools::midpoint.root(phylo)
-phylo_mid$tip.label <- 1:length(phylo_mid$tip.label)
-ggtree(phylo_mid) + geom_tiplab(size = 2) + 
-  xlim(c(0, .4)) + ggtitle("Phylogenomic tree") + 
+match_df <- data.frame(oldlab = phylo$tip.label,
+                       newlab = 1:length(phylo$tip.label))
+phylo_num <- rename_labs(match_df, phylo)
+ggtree(phylo_num) + geom_tiplab(size = 2) + 
+  xlim(c(0, .65)) + ggtitle("Phylogenomic tree") + 
   theme(plot.title = element_text(hjust = 0.5))
 ggsave("figures/strep/phylogenomic_tree.jpeg")
 # color those internal edges
-order_df <- data.frame(phylo_rank = rank(phylo$edge.length),
-                       vector_rank = rank(lm_res_strep$vectors[197,]))
-tree_ind <- order_df$phylo_rank[which(order_df$vector_rank == 78)]
-ggtree(phylo_mid) + geom_tiplab(size = 2) + 
-  xlim(c(0, .4)) + ggtitle("Phylogenomic tree") + 
+n_edge <- length(phylo$edge.length)
+df_phylo <- data.frame(val = phylo$edge.length,
+                       phy_num = 1:n_edge)
+df_vec <- data.frame(val = lm_res_strep$vectors[197, ],
+                     vec_num = 1:n_edge)
+df_order <- inner_join(df_phylo, df_vec, by = "val")
+tree_ind_79 <- df_order$phy_num[which(df_order$vec_num == 79)]
+phylo_num$edge[tree_ind_79, ]
+tree_ind_17 <- df_order$phy_num[which(df_order$vec_num == 17)]
+phylo_num$edge[tree_ind_17, ]
+tree_ind_86 <- df_order$phy_num[which(df_order$vec_num == 86)]
+phylo_num$edge[tree_ind_86, ]
+phylo_num$edge[c(tree_ind_79, tree_ind_17, tree_ind_86), ]
+ggtree(phylo_num) + geom_tiplab(size = 2) + 
+  xlim(c(0, .65)) + ggtitle("Phylogenomic tree") + 
   theme(plot.title = element_text(hjust = 0.5)) + 
-  geom_highlight(node = phylo$edge[tree_ind, 2], fill = "red")
+  geom_hilight(node = phylo$edge[tree_ind_79, 2], fill = "red", linetype = 3) + 
+  geom_hilight(node = phylo$edge[tree_ind_17, 2], fill = "blue") + 
+  geom_hilight(node = phylo$edge[tree_ind_86, 2], fill = "green") 
 ggsave("figures/strep/phylo_with_lab.jpeg")
 
+# use a random forest for the same classification problem
+set.seed(1)
+RF_res <- randomForest::randomForest(rib ~ ., data = lm_df[training_ind, ])
+RF_pred <- predict(RF_res, newdata = lm_df[testing_ind, ])
+RF_correct <- mean(RF_pred == lm_df$rib[testing_ind])  
+RF_imp <- data.frame(vector = row.names(RF_res$importance),
+                     MeanDecreaseGini = RF_res$importance) %>%
+  arrange(desc(MeanDecreaseGini))
+head(RF_imp)
+# the most important variable is 100 followed by 88, 205, and 57
+tree_ind_100 <- df_order$phy_num[which(df_order$vec_num == 100)]
+phylo_num$edge[tree_ind_100, ]
+tree_ind_88 <- df_order$phy_num[which(df_order$vec_num == 88)]
+phylo_num$edge[tree_ind_88, ]
+tree_ind_205 <- df_order$phy_num[which(df_order$vec_num == 205)]
+phylo_num$edge[tree_ind_205, ]
+tree_ind_57 <- df_order$phy_num[which(df_order$vec_num == 57)]
+phylo_num$edge[tree_ind_57, ]
+ggtree(phylo_num) + geom_tiplab(size = 2) + 
+  xlim(c(0, .65)) + ggtitle("Phylogenomic tree") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  geom_highlight(node = phylo$edge[tree_ind_100, 2], fill = "green",
+                 alpha = 0.5) + 
+  geom_highlight(node = phylo$edge[tree_ind_88, 2], fill = "purple",
+                 alpha = 0.5, to.bottom = TRUE) + 
+  geom_highlight(node = phylo$edge[tree_ind_205, 2], fill = "red",
+                 alpha = 0.5) + 
+  geom_highlight(node = phylo$edge[tree_ind_57, 2], fill = "skyblue",
+                 alpha = 0.5)
+ggsave("figures/strep/phylo_with_RF_lab.jpeg")
+ggtree(phylo_num) + ggtitle("Phylogenomic tree") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  geom_cladelab(node = phylo$edge[tree_ind_100, 2], label = "var 1",
+                align = TRUE, offset = .1, textcolor = "red", 
+                barcolor = "red") + 
+  geom_cladelab(node = phylo$edge[tree_ind_88, 2], label = "var 2",
+                align = TRUE, offset = .1, textcolor = "blue", 
+                barcolor = "blue")
+
 # use a randomly generated tree as the base tree
+# get empirical distribution of branch lengths in tree dataset 
+all_branches <- unlist(lapply(all_trees, function(tree) {tree$edge.length}))
+all_branches_no0 <- all_branches[all_branches != 0]
+n_br <- length(all_trees[[1]]$edge.length)
+
 # seed of 1
 set.seed(1)
-rand_tree1 <- rtree(length(all_trees[[1]]$tip.label), rooted = FALSE)
-rand_tree1$tip.label <- all_trees[[1]]$tip.label
+branch_1 <- sample(x = all_branches_no0, size = n_br)
+rand_tree1 <- rtree(n = length(all_trees[[1]]$tip.label), rooted = FALSE,
+                    br = branch_1, tip.label = all_trees[[1]]$tip.label)
 write.tree(rand_tree1, "data/strep/rand_tree1.txt")
 rand_tree1_lm_res <- compute_logmap(tree_paths = c(paths, "data/strep/rand_tree1.txt"),
                                     tree_names = c(gene_names, "phylogenomic", "random"),
@@ -252,19 +310,23 @@ diag(RF_dists) <- NA
 rowMeans(RF_dists, na.rm = TRUE)
 # seed of 2
 set.seed(2)
-rand_tree2 <- rtree(length(all_trees[[1]]$tip.label), rooted = FALSE)
-rand_tree2$tip.label <- all_trees[[1]]$tip.label
+branch_2 <- sample(x = all_branches_no0, size = n_br)
+rand_tree2 <- rtree(n = length(all_trees[[1]]$tip.label), rooted = FALSE,
+                    br = branch_2, tip.label = all_trees[[1]]$tip.label)
 write.tree(rand_tree2, "data/strep/rand_tree2.txt")
 rand_tree2_lm_res <- compute_logmap(tree_paths = c(paths, "data/strep/rand_tree2.txt"),
                                     tree_names = c(gene_names, "phylogenomic", "random"),
                                     base_lab = "random")
-rand_tree2_plot_res <- plot_logmap(vectors = rand_tree2_lm_res$vectors,
+rand_tree2_plot_res <- plot_logmap(vectors = rand_tree1_lm_res$vectors,
                                    phylogenomic = 197,
                                    phylogenomic_name = "$\\bar{T}_p^{full}$",
                                    title = "Random base tree", 
                                    tree_names = c(gene_names, "phylogenomic", "random"),
                                    other_tree = 198,
-                                   other_name = "random") 
+                                   other_name = "random",
+                                   group = c(ribs, "other"),
+                                   alpha = 0.8,
+                                   trees_to_label = c("DUF3270", "EcsB", "DUF1934")) 
 rand_tree2_plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
@@ -274,19 +336,23 @@ diag(RF_dists) <- NA
 rowMeans(RF_dists, na.rm = TRUE)
 # seed of 3
 set.seed(3)
-rand_tree3 <- rtree(length(all_trees[[1]]$tip.label), rooted = FALSE)
-rand_tree3$tip.label <- all_trees[[1]]$tip.label
+branch_3 <- sample(x = all_branches_no0, size = n_br)
+rand_tree3 <- rtree(n = length(all_trees[[1]]$tip.label), rooted = FALSE,
+                    br = branch_3, tip.label = all_trees[[1]]$tip.label)
 write.tree(rand_tree3, "data/strep/rand_tree3.txt")
 rand_tree3_lm_res <- compute_logmap(tree_paths = c(paths, "data/strep/rand_tree3.txt"),
                                     tree_names = c(gene_names, "phylogenomic", "random"),
                                     base_lab = "random")
-rand_tree3_plot_res <- plot_logmap(vectors = rand_tree3_lm_res$vectors,
+rand_tree3_plot_res <- plot_logmap(vectors = rand_tree1_lm_res$vectors,
                                    phylogenomic = 197,
                                    phylogenomic_name = "$\\bar{T}_p^{full}$",
                                    title = "Random base tree", 
                                    tree_names = c(gene_names, "phylogenomic", "random"),
                                    other_tree = 198,
-                                   other_name = "random") 
+                                   other_name = "random",
+                                   group = c(ribs, "other"),
+                                   alpha = 0.8,
+                                   trees_to_label = c("DUF3270", "EcsB", "DUF1934")) 
 rand_tree3_plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
@@ -296,19 +362,23 @@ diag(RF_dists) <- NA
 rowMeans(RF_dists, na.rm = TRUE)
 # seed of 4
 set.seed(4)
-rand_tree4 <- rtree(length(all_trees[[1]]$tip.label), rooted = FALSE)
-rand_tree4$tip.label <- all_trees[[1]]$tip.label
+branch_4 <- sample(x = all_branches_no0, size = n_br)
+rand_tree4 <- rtree(n = length(all_trees[[1]]$tip.label), rooted = FALSE,
+                    br = branch_4, tip.label = all_trees[[1]]$tip.label)
 write.tree(rand_tree4, "data/strep/rand_tree4.txt")
 rand_tree4_lm_res <- compute_logmap(tree_paths = c(paths, "data/strep/rand_tree4.txt"),
                                     tree_names = c(gene_names, "phylogenomic", "random"),
                                     base_lab = "random")
-rand_tree4_plot_res <- plot_logmap(vectors = rand_tree4_lm_res$vectors,
+rand_tree4_plot_res <- plot_logmap(vectors = rand_tree1_lm_res$vectors,
                                    phylogenomic = 197,
                                    phylogenomic_name = "$\\bar{T}_p^{full}$",
                                    title = "Random base tree", 
                                    tree_names = c(gene_names, "phylogenomic", "random"),
                                    other_tree = 198,
-                                   other_name = "random") 
+                                   other_name = "random",
+                                   group = c(ribs, "other"),
+                                   alpha = 0.8,
+                                   trees_to_label = c("DUF3270", "EcsB", "DUF1934")) 
 rand_tree4_plot_res$plot + 
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
@@ -316,3 +386,95 @@ ggsave("figures/strep/lm_viz_rand_base4.png")
 RF_dists <- as.matrix(phangorn::RF.dist(c(all_trees, rand_tree4)))
 diag(RF_dists) <- NA
 rowMeans(RF_dists, na.rm = TRUE)
+
+# run tSNE
+set.seed(1)
+tsne_plot1 <- plot_tsne(vectors = lm_res_strep$vectors, phylogenomic = length(paths),
+                        title = "t-SNE of Streptococcus trees", tree_names = c(gene_names, "phylogenomic"),
+                        phylogenomic_name = "$\\bar{T}_p^{full}$",
+                        group = ribs,
+                        alpha = 0.8,
+                        trees_to_label = c("DUF3270", "EcsB", "DUF1934"))
+tsne_plot1$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/strep/tsne1.png")
+set.seed(2)
+tsne_plot2 <- plot_tsne(vectors = lm_res_strep$vectors, phylogenomic = length(paths),
+                        title = "t-SNE of Streptococcus trees", tree_names = c(gene_names, "phylogenomic"),
+                        phylogenomic_name = "$\\bar{T}_p^{full}$",
+                        group = ribs,
+                        alpha = 0.8,
+                        trees_to_label = c("DUF3270", "EcsB", "DUF1934"))
+tsne_plot2$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/strep/tsne2.png")
+set.seed(3)
+tsne_plot3 <- plot_tsne(vectors = lm_res_strep$vectors, phylogenomic = length(paths),
+                        title = "t-SNE of Streptococcus trees", tree_names = c(gene_names, "phylogenomic"),
+                        phylogenomic_name = "$\\bar{T}_p^{full}$",
+                        group = ribs,
+                        alpha = 0.8,
+                        trees_to_label = c("DUF3270", "EcsB", "DUF1934"))
+tsne_plot3$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/strep/tsne3.png")
+set.seed(4)
+tsne_plot4 <- plot_tsne(vectors = lm_res_strep$vectors, phylogenomic = length(paths),
+                        title = "t-SNE of Streptococcus trees", tree_names = c(gene_names, "phylogenomic"),
+                        phylogenomic_name = "$\\bar{T}_p^{full}$",
+                        group = ribs,
+                        alpha = 0.8,
+                        trees_to_label = c("DUF3270", "EcsB", "DUF1934"))
+tsne_plot4$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/strep/tsne4.png")
+
+# run UMAP
+set.seed(1)
+umap_plot1 <- plot_umap(vectors = lm_res_strep$vectors, phylogenomic = length(paths),
+                        title = "UMAP of Streptococcus trees", tree_names = c(gene_names, "phylogenomic"),
+                        phylogenomic_name = "$\\bar{T}_p^{full}$",
+                        group = ribs,
+                        alpha = 0.8,
+                        trees_to_label = c("DUF3270", "EcsB", "DUF1934"))
+umap_plot1$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/strep/umap1.png")
+set.seed(2)
+umap_plot2 <- plot_umap(vectors = lm_res_strep$vectors, phylogenomic = length(paths),
+                        title = "UMAP of Streptococcus trees", tree_names = c(gene_names, "phylogenomic"),
+                        phylogenomic_name = "$\\bar{T}_p^{full}$",
+                        group = ribs,
+                        alpha = 0.8,
+                        trees_to_label = c("DUF3270", "EcsB", "DUF1934"))
+umap_plot2$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/strep/umap2.png")
+set.seed(3)
+umap_plot3 <- plot_umap(vectors = lm_res_strep$vectors, phylogenomic = length(paths),
+                        title = "UMAP of Streptococcus trees", tree_names = c(gene_names, "phylogenomic"),
+                        phylogenomic_name = "$\\bar{T}_p^{full}$",
+                        group = ribs,
+                        alpha = 0.8,
+                        trees_to_label = c("DUF3270", "EcsB", "DUF1934"))
+umap_plot3$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/strep/umap3.png")
+set.seed(4)
+umap_plot4 <- plot_umap(vectors = lm_res_strep$vectors, phylogenomic = length(paths),
+                        title = "UMAP of Streptococcus trees", tree_names = c(gene_names, "phylogenomic"),
+                        phylogenomic_name = "$\\bar{T}_p^{full}$",
+                        group = ribs,
+                        alpha = 0.8,
+                        trees_to_label = c("DUF3270", "EcsB", "DUF1934"))
+umap_plot4$plot + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("figures/strep/umap4.png")
