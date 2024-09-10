@@ -1,0 +1,79 @@
+Tree Number,Assembly number,Taxonomy,Strain,Sequencing technology,Assembly method,Source information 1,Source reference 1,Source information 2,Source reference 2,Source summary,BacA clade,Phylogenomic clade
+1,GCA_000025925.1,Prevotella ruminicola 23,strain=Bryant 23,NA,NA,NA,NA,NA,NA,NA,1,1
+2,GCA_000144405.1,Prevotella melaninogenica ATCC 25845,strain=ATCC 25845,454,Celera Assembler v. 5.42,Human Microbiome Project,https://www.ncbi.nlm.nih.gov/,Obtained from a Professor of Oral Medicine,https://www.forsyth.org/scientists/floyd-dewhirst/,oral microbiome,0,0
+3,GCA_003609775.1,Prevotella melaninogenica,strain=GAI 07411,PacBio RSII,HGAP v. 3,"Owner name: Department of Pediatric Dentistry, Nagasaki University Graduate School of Biomedical Sciences",https://www.ncbi.nlm.nih.gov/,NA,NA,oral microbiome,0,0
+4,GCA_000467895.1,Prevotella sp. F0091,strain=F0091,Illumina,Velvet v. 1.1.06,Isolation source: subgingival plaque biofilm,https://www.ncbi.nlm.nih.gov/,NA,NA,oral microbiome,0,0
+5,GCA_001262015.1,Prevotella fusca JCM 17724,strain=W1435,PacBio RSII,SMRT Analysis RS_HGAP_Assembly.2 v. 2.3.0.140936.p2.144836,Env broad scale: Human oral cavity,https://www.ncbi.nlm.nih.gov/,NA,NA,oral microbiome,0,0
+6,GCA_000191065.1,Prevotella multiformis DSM 16608,strain=DSM 16608,454,Newbler Assembler v. 2.3-04192010,"Strain source, body site: Oral",https://www.ncbi.nlm.nih.gov/,NA,NA,oral microbiome,0,0
+7,GCA_000257925.1,Prevotella sp. oral taxon 306 str. F0472,strain=F0472,Illumina,Celera Assembler v. 6.1,This is a reference genome for the Human Microbiome Project,https://www.ncbi.nlm.nih.gov/,oral taxon 306 str. F0472 (CFB group bacteria),https://www.ncbi.nlm.nih.gov/,oral microbiome,0,0
+8,GCA_000377625.1,Prevotella veroralis DSM 19559 = JCM 6290,strain=DSM 19559,Illumina HiSeq 2000,Velvet v. 1.1.04; ALLPATHS v. R37654,Isolation Site: Human oral cavity,https://www.ncbi.nlm.nih.gov/,NA,NA,oral microbiome,0,0
+9,GCA_000220235.1,Prevotella nigrescens ATCC 33563,strain=ATCC 33563,454,Newbler Assembler v. 2.3-01162009,"Strain source, body site: Oral",https://www.ncbi.nlm.nih.gov/,NA,NA,oral microbiome,0,0
+10,GCA_000220255.1,Prevotella pallens ATCC 700821,strain=ATCC 700821,454,Newbler Assembler v. 2.3-01162009,"Strain source, body site: Oral",https://www.ncbi.nlm.nih.gov/,NA,NA,oral microbiome,0,0
+11,GCA_001953955.1,Prevotella intermedia ATCC 25611 = DSM 20706,strain=ATCC 25611,PacBio,Celera Assembler v. June 2016; HGAP v. 2.3,Owner name: The Forsyth Institute,https://www.ncbi.nlm.nih.gov/,Obtained from a oral health research institute,https://www.forsyth.org/,oral microbiome  ,0,0
+12,GCA_008016795.1,Prevotella brunnea,strain=A2672,Ilumina,CLC Genomics Workbench v. 11.0,Isolation source: wound swab,https://www.ncbi.nlm.nih.gov/,NA,NA,wound  ,0,0
+13,GCA_000688375.1,Prevotella sp. HUN102,strain=HUN102,Illumina HiSeq 2000,HGAP v. 1.1,NA,NA,NA,NA,NA,0,0
+14,GCA_900314455.1,uncultured Prevotella sp.,NA,NA,NA,Submitter: the Roslin Institute,https://www.ncbi.nlm.nih.gov/,NA,NA,rumen microbiome,0,0
+15,GCA_900314945.1,uncultured Prevotella sp.,NA,NA,NA,Submitter: the Roslin Institute,https://www.ncbi.nlm.nih.gov/,NA,NA,rumen microbiome,0,0
+16,GCA_900315635.1,uncultured Prevotella sp.,NA,NA,NA,Submitter: the Roslin Institute,https://www.ncbi.nlm.nih.gov/,NA,NA,rumen microbiome,0,0
+17,GCA_900771975.1,uncultured Prevotella sp.,NA,NA,NA,Description: Human gut MAG #48,https://www.ncbi.nlm.nih.gov/,NA,NA,human gut microbiome,0,0
+18,GCA_000218235.1,Prevotella multisaccharivorax DSM 17128,strain=DSM 17128,454; Illumina,Newbler v. 2.3,NA,NA,NA,NA,NA,0,0
+19,GCA_002353825.1,Prevotella sp. UBA2725,NA,Illumina,CLC de novo assembler v. 4.4.1,NA,NA,NA,NA,NA,0,0
+20,GCA_902792635.1,uncultured Prevotellaceae bacterium,NA,NA,NA,Submitter: the Roslin Institute,https://www.ncbi.nlm.nih.gov/,NA,NA,rumen microbiome,0,0
+21,GCA_900315835.1,uncultured Prevotella sp.,NA,NA,NA,Submitter: the Roslin Institute,https://www.ncbi.nlm.nih.gov/,NA,NA,rumen microbiome,0,0
+22,GCA_013333935.1,Prevotella sp.,NA,Illumina NextSeq 500,MEGAHIT v. 1.0.6,Isolation source: dental plaque,https://www.ncbi.nlm.nih.gov/,NA,NA,oral microbiome,0,0
+23,GCA_900546345.1,uncultured Prevotella sp.,NA,NA,NA,NA,NA,NA,NA,NA,0,0
+24,GCA_000518545.1,Hallella seregens ATCC 51272,strain=ATCC 51272,Illumina HiSeq 2000,Unknown program v. before 2013-10-16,NA,NA,NA,NA,NA,0,0
+25,GCA_000758925.1,Prevotella sp. S7-1-8,strain=S7-1-8,Illumina,Newbler v. 2.9,Isolation source: vagina,https://www.ncbi.nlm.nih.gov/,NA,NA,vaginal microbiome,0,0
+26,GCA_001552765.1,Bacteroidales bacterium KA00344,strain=KA00344,Illumina,Velvet v. 1.1.06,Isolation source: vagina,https://www.ncbi.nlm.nih.gov/,NA,NA,vaginal microbiome,0,0
+27,GCA_000157935.1,Prevotella copri DSM 18205,strain=DSM 18205,454,NA,Comment: Prevotella copri (GenBank Accession Number for 16S rDNA gene: AB064923) is a member of the Bacteroidetes division of the domain bacteria and has been isolated from human feces.,https://www.ncbi.nlm.nih.gov/,NA,NA,fecal microbiome,0,0
+28,GCA_902167755.1,Prevotella copri DSM 18205,NA,NA,NA,Description: Cultured isolate from human donor,https://www.ncbi.nlm.nih.gov/,NA,NA,NA,0,0
+29,GCA_002224675.1,Prevotella copri,strain=Indica,454,GS De Novo Assembler v. 2.3,Isolation source: stool,https://www.ncbi.nlm.nih.gov/,NA,NA,fecal microbime,0,0
+30,GCA_900544825.1,uncultured Prevotella sp.,NA,NA,NA,NA,NA,NA,NA,NA,0,0
+31,GCA_004535825.1,Prevotella hominis,strain=BCRC 81118,Illumina HiSeq,SOAPdenovo v. 2.04,Isolation source: feces,https://www.ncbi.nlm.nih.gov/,NA,NA,fecal microbime,1,0
+32,GCA_009495355.1,Prevotella copri,strain=iAQ1173,Illumina HiSeq,SPAdes v. 3.1.1,Isolation source: stool,https://www.ncbi.nlm.nih.gov/,NA,NA,fecal microbime,1,0
+33,GCA_000424185.1,Prevotella sp. AGR2160,strain=AGR2160,Illumina HiSeq 2000,Unknown program v. before 2013-05-07,,NA,NA,NA,NA,0,0
+34,GCA_000426565.1,Prevotella albensis DSM 11370 = JCM 12258,strain=DSM 11370,Illumina HiSeq 2000,Unknown program v. before 2013-05-22,,NA,NA,NA,NA,1,0
+35,GCA_000373185.1,Prevotella paludivivens DSM 17968 = JCM 13650,strain=DSM 17968,Illumina,Velvet v. 1.1.04; ALLPATHS v. r41043,,NA,NA,NA,NA,0,0
+36,GCA_000382385.1,Prevotella maculosa DSM 19339 = JCM 15638,strain=DSM 19339,Illumina HiSeq 2000,Velvet v. 1.1.04; ALLPATHS v. r41043,Host: Homo sapiens,https://www.ncbi.nlm.nih.gov/data-hub/genome/GCF_000382385.1/,NA,NA,NA,0,0
+37,GCA_900637655.1,Prevotella oris,strain=NCTC13071,NA,NA,NA,NA,NA,NA,NA,0,0
+38,GCA_000599605.1,Prevotella sp. HJM029,strain=HJM029,Illumina HiSeq,Velvet v. 1.2.10,Isolation source: human dental abscess,https://www.ncbi.nlm.nih.gov/,NA,NA,oral microbiome,0,0
+39,GCA_900113305.1,Prevotella sp. KH2C16,strain=KH2C16,NA,NA,NA,NA,NA,NA,NA,0,0
+40,GCA_000177075.1,Prevotella buccalis ATCC 35310,strain=ATCC 35310,454,NA,NA,NA,NA,NA,NA,0,0
+41,GCA_000479005.1,Prevotella sp. BV3P1,strain=BV3P1,454,Newbler v. 2.6,NA,NA,NA,NA,NA,0,0
+42,GCA_000455445.1,Prevotella timonensis 4401737 = DSM 22865 = JCM 15640,strain=4401737,NA,NA,NA,NA,NA,NA,NA,0,0
+43,GCA_000762405.1,Prevotella timonensis S9-PR14,strain=S9-PR14,Illumina,SPAdes v. 3.0.0,Isolation source: vagina,https://www.ncbi.nlm.nih.gov/,NA,NA,vaginal microbiome,0,0
+44,GCA_000378085.1,Prevotella loescheii DSM 19665 = JCM 12249 = ATCC 15930,strain=DSM 19665,Illumina HiSeq 2000,Velvet v. 1.1.04; ALLPATHS v. R37654,Isolation site: Gingival crevice,https://www.ncbi.nlm.nih.gov/,NA,NA,oral microbiome,0,0
+45,GCA_000379965.1,Prevotella nanceiensis DSM 19126 = JCM 15639,strain=DSM 19126,Illumina,Velvet v. 1.1.04; ALLPATHS v. r41043,NA,NA,NA,NA,NA,0,0
+46,GCA_002251365.1,Prevotella sp. P3-122,strain=P3-122,Illumina MiSeq,SPAdes v. 3.1.1,Env local scale: large intestine,https://www.ncbi.nlm.nih.gov/,NA,NA,gut microbiome,1,0
+47,GCA_002265625.1,Prevotella sp. 885,strain=885,IonTorrent,SPAdes v. 3.9.1,Isolation source: feces,https://www.ncbi.nlm.nih.gov/,NA,NA,fecal microbime,1,0
+48,GCA_900290275.1,Prevotella sp. Marseille-P4119,strain=Marseille-P4119,NA,NA,NA,NA,NA,NA,NA,1,0
+49,GCA_900314715.1,uncultured Prevotellaceae bacterium,NA,NA,NA,Submitter: the Roslin Institute,https://www.ncbi.nlm.nih.gov/,NA,NA,rumen microbiome,0,0
+50,GCA_902769705.1,uncultured Prevotellaceae bacterium,NA,NA,NA,Submitter: the Roslin Institute,https://www.ncbi.nlm.nih.gov/,NA,NA,rumen microbiome,0,0
+51,GCA_002394365.1,Prevotellaceae bacterium UBA4332,NA,Illumina,CLC de novo assembler v. 4.4.1,NA,NA,NA,NA,NA,0,1
+52,GCA_900316295.1,uncultured Prevotella sp.,NA,NA,NA,Submitter: the Rosin Institute,https://www.ncbi.nlm.nih.gov/,,NA,rumen microbiome,0,1
+53,GCA_000834015.1,Prevotella pectinovora,strain=P4-76,Illumina MiSeq,Spades v. 3.1.1,Env broad scale: intestine,https://www.ncbi.nlm.nih.gov/,,NA,gut microbiome,1,1
+54,GCA_013166515.1,Prevotella sp. PCHR,strain=PCHR,Illumina MiSeq,SPAdes v. 3.10.0,Isolation source: feces,https://www.ncbi.nlm.nih.gov/,,NA,fecal microbime,1,1
+55,GCA_001275135.1,Prevotella rara,strain=109,454,Newbler v. 2.7,Isolation source: feces,https://www.ncbi.nlm.nih.gov/,,NA,fecal microbime,0,1
+56,GCA_003977605.1,Prevotella koreensis,strain=KCOM 3155,Illumina HiSeq,SPAdes v. 3.8.2,Submitter: Korean Collection for Oral Microbiology,https://www.ncbi.nlm.nih.gov/,,NA,oral microbiome  ,0,1
+57,GCA_900315565.1,uncultured Prevotellaceae bacterium,NA,NA,NA,Submitter: the Rosin Institute,https://www.ncbi.nlm.nih.gov/,,NA,rumen microbiome,0,1
+58,GCA_013166545.1,Prevotella sp. PJ1A,strain=PJ1A,Illumina MiSeq,SPAdes v. 3.10.0,Isolation source: feces,https://www.ncbi.nlm.nih.gov/,Host: mus musculus,https://www.ncbi.nlm.nih.gov/,mouse fecal microbiome,1,1
+59,GCA_002251295.1,Prevotella sp. P5-50,strain=P5-50,Illumina MiSeq,SPAdes v. 3.1.1,Env local scale: large intestine,https://www.ncbi.nlm.nih.gov/,NA,NA,gut microbiome,1,1
+60,GCA_900314755.1,uncultured Prevotellaceae bacterium,NA,NA,NA,Submitter: the Rosin Institute,https://www.ncbi.nlm.nih.gov/,NA,NA,rumen microbiome,0,1
+61,GCA_902776195.1,uncultured Prevotellaceae bacterium,NA,NA,NA,Submitter: the Rosin Institute,https://www.ncbi.nlm.nih.gov/,NA,NA,rumen microbiome,0,1
+62,GCA_900119285.1,Prevotellaceae bacterium HUN156,strain=HUN156,NA,NA,NA,NA,NA,NA,NA,0,1
+63,GCA_900199555.1,Prevotellaceae bacterium MN60,strain=MN60,NA,NA,NA,NA,NA,NA,NA,0,1
+64,GCA_902760345.1,uncultured Bacteroidales bacterium,NA,NA,NA,Submitter: the Rosin Institute,https://www.ncbi.nlm.nih.gov/,NA,NA,rumen microbiome,0,1
+65,GCA_902770195.1,uncultured Prevotellaceae bacterium,NA,NA,NA,Submitter: the Rosin Institute,https://www.ncbi.nlm.nih.gov/,NA,NA,rumen microbiome,0,1
+66,GCA_902762565.1,uncultured Prevotellaceae bacterium,NA,NA,NA,Submitter: the Rosin Institute,https://www.ncbi.nlm.nih.gov/,NA,NA,rumen microbiome,1,1
+67,GCA_902774925.1,uncultured Prevotellaceae bacterium,NA,NA,NA,Submitter: the Rosin Institute,https://www.ncbi.nlm.nih.gov/,NA,NA,rumen microbiome,0,1
+68,GCA_000621725.1,Prevotella brevis ATCC 19188,strain=ATCC 19188,Illumina HiSeq 2000,vpAllpaths v. r46652,NA,NA,NA,NA,NA,0,1
+69,GCA_900100635.1,Prevotella sp. BP1-148,strain=BP1-148,NA,NA,NA,NA,NA,NA,NA,1,1
+70,GCA_902788605.1,uncultured Prevotellaceae bacterium,NA,NA,NA,Submitter: the Rosin Institute,https://www.ncbi.nlm.nih.gov/,NA,NA,rumen microbiome,0,1
+71,GCA_900318585.1,uncultured Prevotellaceae bacterium,NA,NA,NA,Submitter: the Rosin Institute,https://www.ncbi.nlm.nih.gov/,NA,NA,rumen microbiome,0,1
+72,GCA_900110895.1,Prevotella aff. ruminicola Tc2-24,strain=TC2-24,NA,NA,NA,NA,NA,NA,NA,0,1
+73,GCA_900314995.1,uncultured Prevotella sp.,NA,NA,NA,Submitter: the Rosin Institute,https://www.ncbi.nlm.nih.gov/,NA,NA,rumen microbiome,0,1
+74,GCA_900315525.1,uncultured Prevotella sp.,NA,NA,NA,NA,NA,NA,NA,rumen microbiome,0,1
+75,GCA_900109055.1,Prevotella sp. khp7,strain=KHP7,NA,NA,NA,NA,NA,NA,NA,0,1
+76,GCA_900142525.1,Prevotella ruminicola,strain=KHT3,NA,NA,NA,NA,NA,NA,NA,0,1
+77,GCA_000687715.1,Prevotella ruminicola Ga6B6,strain=Ga6B6,vpAllpaths v. r46652,Illumina HiSeq 2000,NA,NA,NA,NA,NA,1,1
+78,GCA_900107775.1,Prevotella ruminicola,strain=D31d,NA,NA,NA,NA,NA,NA,NA,1,1
